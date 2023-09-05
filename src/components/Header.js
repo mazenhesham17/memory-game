@@ -7,7 +7,7 @@ function Header() {
     return (
         <HStack justifyContent={"center"}>
             <Score score={4650} color={"#F1C93B"} />
-            <Score score={4650} color={"#9DB2BF"} />
+            <Score score={4650} color={"#DDE6ED"} />
             <IconButton icon={<FontAwesomeIcon icon={faRotateRight} size="3x" color="#9DB2BF" ></FontAwesomeIcon>} backgroundColor={"transparent"} ></IconButton>
         </HStack>
     );
