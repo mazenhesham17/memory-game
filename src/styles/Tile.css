@@ -8,9 +8,8 @@
 }
 
 .card {
-    width: 200px;
-    height: 100px;
-    perspective: 1000px;
+    height: 70px ;
+    perspective: 200px;
 }
 
 .card-inner {

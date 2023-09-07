@@ -1,4 +1,4 @@
-import { Center, ChakraProvider, VStack } from '@chakra-ui/react';
+import { Button, Center, ChakraProvider, HStack, VStack } from '@chakra-ui/react';
 import { generateLevels } from './logic/levels';
 import { generateBoard } from './logic/board';
 import Header from './components/Header';
@@ -8,54 +8,68 @@ import './App.css';
 import { useEffect, useState } from 'react';
 
 function App() {
-  const levels = generateLevels() ;
-  const [currentScore,setCurrentScore] = useState(null) ;
-  const [currentLevel,setCurrentLevel] = useState(null) ;
-  const [currentMoves,setCurrentMoves] = useState(null) ;
-  const [totalMoves,setTotalMoves] = useState(null) ;
-  const [board,setBoard] = useState(null) ;
+  const levels = generateLevels();
+  const [currentScore, setCurrentScore] = useState(0);
+  const [currentLevel, setCurrentLevel] = useState(0);
+  let { n, m } = levels[currentLevel];
+  const [currentMoves, setCurrentMoves] = useState(n * m + 1);
+  const [totalMoves, setTotalMoves] = useState(n * m + 1);
+  const [board, setBoard] = useState(generateBoard(n, m));
 
-  const levelUp = () => {
-    const updatedLevel = currentLevel + 1;
-    setCurrentLevel(updatedLevel);
-    console.log("hello");
-  
-    // Use the updatedLevel variable to access the correct level configuration
-    const levelConfig = levels[updatedLevel];
-  
-    if (levelConfig) {
-      setTotalMoves(levelConfig.n * levelConfig.m + 1);
-      setCurrentMoves(levelConfig.n * levelConfig.m + 1);
-      setBoard(generateBoard(levelConfig.n, levelConfig.m));
-    }
-  };
-  
-  const init = () => {
+
+  const reset = ()=>{
     setCurrentScore(0);
-    console.log("Hello2");
-    setCurrentLevel(-1);
-    levelUp() ;
+    setCurrentLevel(0);
+  }
+
+  const updateLevel = ()=>{
+    if ( currentLevel + 1 == levels.length )
+      return false ;
+    setCurrentLevel( currentLevel + 1 ) ;
+    return true ;
+  }
+
+  const incrementScore = (val) => {
+    setCurrentScore(currentScore + val);
+  }
+
+  const updateCurrentMoves = (val) => {
+    setCurrentMoves(val);
+  }
+
+  const updateTotalMoves = (val) => {
+    setTotalMoves(val);
+  }
+
+  const updateBoard = (n,m) => {
+    setBoard(generateBoard(n, m));
+  }
+
+
+  useEffect( ()=>{
+    let { n, m } = levels[currentLevel];
+    updateCurrentMoves(n * m + 1);
+    updateTotalMoves(n * m + 1);
+    updateBoard(n,m) ;
+  } , [currentLevel] ) ;
+
+  const init = () => {
+    reset() ;
   };
-  
-  useEffect(() => {
-    init();
-  }, []);
-  
-  // Watch for changes in currentLevel and trigger levelUp when it changes
-  { useEffect(() => {
-    setInterval( () => {
-      if ( currentLevel < levels.length ){
-        levelUp() ;
-      }
-    } , 10000) ;
-  }, []);  }
 
   return (
     <ChakraProvider>
       <Center>
         <VStack>
           <Header score={currentScore} />
-          <Board tiles={ board || [[]] } level={currentLevel+1} ></Board>
+          <Board tiles={board} level={currentLevel + 1} ></Board>
+          <Button onClick={updateLevel}> Update  </Button>
+          <HStack>
+            <Button onClick={() => incrementScore(10)} > update score </Button>
+            <Button onClick={() => updateCurrentMoves(currentMoves - 1)} > decrement moves </Button>
+            <Button onClick={() => { updateTotalMoves(totalMoves + 1); updateCurrentMoves(currentMoves + 1) }} > update moves </Button>
+          </HStack>
+          <Button onClick={init}> reset </Button>
           <Bar moves={currentMoves} totMoves={totalMoves} />
         </VStack>
       </Center>

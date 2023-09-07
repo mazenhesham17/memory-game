@@ -1,4 +1,5 @@
 import { Box, Center, HStack, Text, VStack } from "@chakra-ui/react";
+import { generateCustomKey } from "../logic/utilities";
 import Tile from "./Tile";
 
 
@@ -11,13 +12,13 @@ function Board(props) {
         <VStack backgroundColor={"gray.200"} borderRadius={"20px"} >
             <Text fontSize={"3xl"} fontWeight={"bold"} color={"white"} > Level {props.level} </Text>
             <Center>
-                <Box width={"25rem"} height={"75vh"}>
-                    {props.tiles.map((row, rowIndex) => {
+                <Box width={"22rem"} >
+                    {props.tiles.map((row) => {
                         return (
-                            <HStack key={rowIndex} >
-                                {row.map((ele, columnIndex) => {
+                            <HStack key={generateCustomKey(row)} >
+                                {row.map((ele) => {
                                     return (
-                                        <Tile id={rowIndex * m + columnIndex} frontContent={ele} height={height} width={width} />
+                                        <Tile key={generateCustomKey(ele)} frontContent={ele} height={height} width={width} />
                                     )
                                 })}
                             </HStack>

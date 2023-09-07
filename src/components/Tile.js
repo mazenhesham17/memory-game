@@ -9,8 +9,8 @@ const Tile = (props) => {
     setFlipped(!isFlipped);
   };
   return (
-    <Box className={`card ${isFlipped ? 'flipped' : ''}`} onClick={flipCard} margin={"10px"} 
-       width={`${props.width}%`} >
+    <Box className={`card ${isFlipped ? 'flipped' : ''}`} onClick={flipCard} margin={"10px"}
+      width={`${props.width}%`} >
       <Box className="card-inner">
         <Box className="card-front">{isFlipped ? '' : props.frontContent}</Box>
         <Box className="card-back"></Box>

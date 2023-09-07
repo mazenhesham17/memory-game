@@ -24,6 +24,17 @@ function make2dArray(n, m, val) {
     return arr;
 }
 
+// generate unique key for array of char or single char
+function generateCustomKey(val) {
+    let key = Math.floor(Math.random() * 1e9).toString();
+    if (Array.isArray(val)) {
+        key += val.join('');
+    } else {
+        key += val;
+    }
+    return key;
+}
+
 module.exports = {
-    nextChar, randomShuffle, make2dArray
+    nextChar, randomShuffle, make2dArray, generateCustomKey
 }
