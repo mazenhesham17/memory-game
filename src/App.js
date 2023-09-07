@@ -7,6 +7,7 @@ import Board from './components/Board';
 import './App.css';
 
 function App() {
+  const curLevel = 5 ;
   const levels = generateLevels() ;
   return (
     <ChakraProvider>
