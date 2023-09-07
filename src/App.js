@@ -5,18 +5,16 @@ import Header from './components/Header';
 import Bar from './components/Bar';
 import Board from './components/Board';
 import './App.css';
-import { useEffect } from 'react';
 
 function App() {
-  const curLevel = 20 ;
   const levels = generateLevels() ;
   return (
     <ChakraProvider>
       <Center>
         <VStack>
-          <Header></Header>
+          <Header/>
           <Board tiles={generateBoard( levels[curLevel].n , levels[curLevel].m )} ></Board>
-          <Bar moves={6} totMoves={10} ></Bar>
+          <Bar moves={6} totMoves={10} />
         </VStack>
       </Center>
     </ChakraProvider>

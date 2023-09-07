@@ -1,22 +1,22 @@
-import { Box, Center } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import '../styles/Tile.css';
 
-function Tile(props) {
-    const [change,setChange] = useState(0) ;
-    console.log(props) ;
-    const go = ()=>{
-        setChange(change+1) ;
-    }
-    return (
-        <Box onClick={ go } borderRadius={"20px"} margin={"10px"} 
-            backgroundColor={"white"}
-            height={`${props.height}%`} width={`${props.width}%`} fontSize={"2xl"} fontWeight={"bold"} >
-            <Center > 
-                { change & 1 ?  props.char : "F" }
-            </Center>
+const Tile = (props) => {
+  const [isFlipped, setFlipped] = useState(true);
 
-        </Box>
-    );
-}
+  const flipCard = () => {
+    setFlipped(!isFlipped);
+  };
+  return (
+    <Box className={`card ${isFlipped ? 'flipped' : ''}`} onClick={flipCard} margin={"10px"} 
+       width={`${props.width}%`} >
+      <Box className="card-inner">
+        <Box className="card-front">{isFlipped ? '' : props.frontContent}</Box>
+        <Box className="card-back"></Box>
+      </Box>
+    </Box>
+  );
+};
 
 export default Tile;

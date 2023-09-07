@@ -7,23 +7,22 @@ function Board(props) {
     const height = 90 / tiles.length, width = 90 / tiles[0].length;
 
     return (
-        <Center>
-            <VStack backgroundColor={"gray.200"} borderRadius={"20px"} >
-                <Text fontSize={"3xl"} fontWeight={"bold"} color={"white"} > Level 1 </Text>
-                <Box width={"25rem"} >
+        <VStack backgroundColor={"gray.200"} borderRadius={"20px"} >
+            <Text fontSize={"3xl"} fontWeight={"bold"} color={"white"} > Level 1 </Text>
+            <Center>
+                <Box width={"25rem"} height={"75vh"}>
                     {props.tiles.map((row, rowIndex) => {
                         return (
                             <HStack key={rowIndex} >
                                 {row.map((ele, cellIndex) => {
-                                    return <Tile height={height} width={width} char={ele}>  </Tile>
+                                    return <Tile frontContent={ele} height={height} width={width} />
                                 })}
                             </HStack>
                         )
                     })}
                 </Box>
-            </VStack>
-
-        </Center>
+            </Center>
+        </VStack>
     );
 }
 
