@@ -17,16 +17,16 @@ function App() {
   const [board, setBoard] = useState(generateBoard(n, m));
 
 
-  const reset = ()=>{
+  const reset = () => {
     setCurrentScore(0);
     setCurrentLevel(0);
   }
 
-  const updateLevel = ()=>{
-    if ( currentLevel + 1 == levels.length )
-      return false ;
-    setCurrentLevel( currentLevel + 1 ) ;
-    return true ;
+  const updateLevel = () => {
+    if (currentLevel + 1 == levels.length)
+      return false;
+    setCurrentLevel(currentLevel + 1);
+    return true;
   }
 
   const incrementScore = (val) => {
@@ -41,27 +41,23 @@ function App() {
     setTotalMoves(val);
   }
 
-  const updateBoard = (n,m) => {
+  const updateBoard = (n, m) => {
     setBoard(generateBoard(n, m));
   }
 
 
-  useEffect( ()=>{
+  useEffect(() => {
     let { n, m } = levels[currentLevel];
     updateCurrentMoves(n * m + 1);
     updateTotalMoves(n * m + 1);
-    updateBoard(n,m) ;
-  } , [currentLevel] ) ;
-
-  const init = () => {
-    reset() ;
-  };
+    updateBoard(n, m);
+  }, [currentLevel]);
 
   return (
     <ChakraProvider>
       <Center>
         <VStack>
-          <Header score={currentScore} />
+          <Header score={currentScore} action={reset} />
           <Board tiles={board} level={currentLevel + 1} ></Board>
           <Button onClick={updateLevel}> Update  </Button>
           <HStack>
@@ -69,7 +65,6 @@ function App() {
             <Button onClick={() => updateCurrentMoves(currentMoves - 1)} > decrement moves </Button>
             <Button onClick={() => { updateTotalMoves(totalMoves + 1); updateCurrentMoves(currentMoves + 1) }} > update moves </Button>
           </HStack>
-          <Button onClick={init}> reset </Button>
           <Bar moves={currentMoves} totMoves={totalMoves} />
         </VStack>
       </Center>

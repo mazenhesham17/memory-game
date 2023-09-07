@@ -1,14 +1,15 @@
-import { HStack, IconButton } from "@chakra-ui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { HStack } from "@chakra-ui/react";
 import Score from "./Score";
+import Alert from "./Alert";
 
 function Header(props) {
     return (
         <HStack justifyContent={"center"}>
             <Score score={props.score} color={"#F1C93B"} />
             <Score score={props.score} color={"white"} />
-            <IconButton icon={<FontAwesomeIcon icon={faRotateRight} size="3x" color="#9DB2BF" ></FontAwesomeIcon>} backgroundColor={"transparent"} ></IconButton>
+            <Alert header={"Reset progress"} 
+            body={"Are you sure you want to restart the game ?"} 
+            action={props.action} ></Alert>
         </HStack>
     );
 }
