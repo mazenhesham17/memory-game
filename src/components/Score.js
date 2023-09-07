@@ -4,7 +4,7 @@ import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 function Score(props) {
     return (
         <HStack backgroundColor={"gray.200"} borderRadius={"20px"} justifyContent={"center"}
-            margin={"10px"} padding={"10px"} width={"9rem"}  >
+            margin={"5px"} padding={"10px"} width={"8.5rem"}  >
             <Text fontSize={"3xl"} fontWeight={"bold"} color={"white"} >
                 {props.score}
             </Text>
