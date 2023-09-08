@@ -1,4 +1,4 @@
-import { Button, Center, ChakraProvider, HStack, VStack } from '@chakra-ui/react';
+import {  Button, Center, ChakraProvider, HStack, VStack } from '@chakra-ui/react';
 import { generateLevels } from './logic/levels';
 import { generateBoard } from './logic/board';
 import Header from './components/Header';
@@ -10,11 +10,14 @@ import { useEffect, useState } from 'react';
 function App() {
   const levels = generateLevels();
   const [currentScore, setCurrentScore] = useState(0);
+  const [highScore, setHighScore] = useState(localStorage.getItem('highScore') || 0);
   const [currentLevel, setCurrentLevel] = useState(0);
   let { n, m } = levels[currentLevel];
   const [currentMoves, setCurrentMoves] = useState(n * m + 1);
   const [totalMoves, setTotalMoves] = useState(n * m + 1);
   const [board, setBoard] = useState(generateBoard(n, m));
+  const [lost, setLost] = useState(false);
+  const [won, setWon] = useState(false);
 
 
   const reset = () => {
@@ -33,12 +36,13 @@ function App() {
     setCurrentScore(currentScore + val);
   }
 
-  const updateCurrentMoves = (val) => {
-    setCurrentMoves(val);
+  const incrementAllMoves = () => {
+    setTotalMoves(totalMoves + 1);
+    setCurrentMoves(currentMoves + 1);
   }
 
-  const updateTotalMoves = (val) => {
-    setTotalMoves(val);
+  const decrementMoves = () => {
+    setCurrentMoves(currentMoves - 1);
   }
 
   const updateBoard = (n, m) => {
@@ -48,24 +52,36 @@ function App() {
 
   useEffect(() => {
     let { n, m } = levels[currentLevel];
-    updateCurrentMoves(n * m + 1);
-    updateTotalMoves(n * m + 1);
+    setTotalMoves(n * m + 1);
+    setCurrentMoves(n * m + 1);
     updateBoard(n, m);
   }, [currentLevel]);
+
+  useEffect(() => {
+    if (currentScore >= highScore) {
+      localStorage.setItem("highScore", currentScore);
+      setHighScore(currentScore);
+    }
+  }, [currentScore]);
+
+  const toggle = () => {
+    setWon(!won);
+  }
 
   return (
     <ChakraProvider>
       <Center>
         <VStack>
-          <Header score={currentScore} action={reset} />
+          <Header score={currentScore} highScore={highScore} action={reset} />
           <Board tiles={board} level={currentLevel + 1} ></Board>
           <Button onClick={updateLevel}> Update  </Button>
           <HStack>
             <Button onClick={() => incrementScore(10)} > update score </Button>
-            <Button onClick={() => updateCurrentMoves(currentMoves - 1)} > decrement moves </Button>
-            <Button onClick={() => { updateTotalMoves(totalMoves + 1); updateCurrentMoves(currentMoves + 1) }} > update moves </Button>
+            <Button onClick={decrementMoves} > decrement moves </Button>
+            <Button onClick={incrementAllMoves} > update moves </Button>
           </HStack>
           <Bar moves={currentMoves} totMoves={totalMoves} />
+          <Button onClick={toggle}> toggle </Button>
         </VStack>
       </Center>
     </ChakraProvider>
