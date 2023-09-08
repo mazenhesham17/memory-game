@@ -1,29 +1,22 @@
-import { Box, Button } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { Box, } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import '../styles/Tile.css';
 
 const Tile = (props) => {
-  const [isFlipped, setFlipped] = useState(true);
-  const [isCorrect, setCorrect] = useState(false);
-
-  const flipCard = () => {
-    setFlipped(!isFlipped);
-  };
-
-  const toggle = () => {
-    setCorrect(!isCorrect) ;
-  }
   return (
-    <Box className={`card ${isFlipped ? 'flipped' : ''}`} onClick={flipCard} margin={"10px"}
-      width={`${props.width}%`} >
+    <Box className={`card ${props.isFlipped ? 'flipped' : ''}`}
+      onClick={() => {
+        if (props.isFlipped)
+          props.flip(props.row, props.col, !props.isFlipped)
+      }}
+      margin={"10px"} width={`${props.width}%`} >
       <Box className="card-inner">
         <Box className="card-front">
-          {isFlipped ? (
+          {props.isFlipped ? (
             <></>
           ) : (
-            isCorrect ? (
+            props.isCorrect ? (
               <FontAwesomeIcon icon={faCircleCheck} color='green' size='2x' />
             ) : (
               <p>{props.frontContent}</p>

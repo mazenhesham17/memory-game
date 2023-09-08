@@ -13,12 +13,19 @@ function Board(props) {
             <Text fontSize={"3xl"} fontWeight={"bold"} color={"white"} > Level {props.level} </Text>
             <Center>
                 <Box width={"22rem"} >
-                    {props.tiles.map((row) => {
+                    {props.tiles.map((row, rowIndex) => {
                         return (
                             <HStack key={generateCustomKey(row)} >
-                                {row.map((ele) => {
+                                {row.map((ele, colIndex) => {
                                     return (
-                                        <Tile key={generateCustomKey(ele)} frontContent={ele} height={height} width={width} />
+                                        <Tile key={generateCustomKey(ele)}
+                                            isCorrect={props.correct[rowIndex][colIndex]}
+                                            isFlipped={props.flip[rowIndex][colIndex]}
+                                            flip={props.setFlip}
+                                            col={colIndex}
+                                            row={rowIndex}
+                                            frontContent={ele}
+                                            height={height} width={width} />
                                     )
                                 })}
                             </HStack>
