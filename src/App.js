@@ -73,7 +73,7 @@ function App() {
       <Center>
         <VStack>
           <Header score={currentScore} highScore={highScore} action={reset} />
-          <Board tiles={board} level={currentLevel + 1} ></Board>
+          <Board tiles={board} flip={flipState} setFlip={setFlipState} correct={correctState} level={currentLevel + 1} ></Board>
           <Button onClick={updateLevel}> Update  </Button>
           <HStack>
             <Button onClick={() => incrementScore(10)} > update score </Button>
