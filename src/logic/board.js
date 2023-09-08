@@ -2,7 +2,7 @@ import { make2dArray, nextChar,randomShuffle } from "./utilities";
 
 function makeCards(n) {
     var arr = [], cnt = 0, ch = 'A';
-    for (var i = 0; i < n / 2 * 2; i++) {
+    for (var i = 0; i < n - ( n & 1 ); i++) {
         if (cnt === 2) {
             ch = nextChar(ch);
             cnt = 0;

@@ -147,11 +147,10 @@ function App() {
 
   return (
     <ChakraProvider>
-      <Center>
+      <Center height={"100vh"}>
         <VStack>
           <Header score={currentScore} highScore={highScore} action={reset} />
           <Board tiles={board} flip={flipState} setFlip={updateFlipState} correct={correctState} level={currentLevel + 1} ></Board>
-          <Button onClick={updateLevel}> Update  </Button>
           <Bar moves={currentMoves} totMoves={totalMoves} />
           <Button onClick={toggle}> toggle </Button>
         </VStack>
