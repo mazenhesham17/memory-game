@@ -1,4 +1,4 @@
-import { Box, } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import '../styles/Tile.css';
@@ -23,7 +23,7 @@ const Tile = (props) => {
             )
           )}
         </Box>
-        <Box className="card-back"></Box>
+        <Box className="card-back" />
       </Box>
     </Box>
   );

@@ -13,14 +13,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useRef } from "react";
 
-function Alert(props) {
+function MyAlert(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef();
     return (
         <>
-            <IconButton icon={<FontAwesomeIcon icon={faRotateRight} size="3x" color="#9DB2BF" ></FontAwesomeIcon>} backgroundColor={"transparent"} onClick={onOpen}></IconButton>
-            <AlertDialog isOpen={isOpen}
-                leastDestructiveRef={cancelRef}
+            <IconButton icon={<FontAwesomeIcon icon={faRotateRight} size="3x" color="#9DB2BF" />}
+                backgroundColor={"transparent"} onClick={onOpen} />
+            <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef}
                 onClose={onClose}>
                 <AlertDialogOverlay>
                     <AlertDialogContent>
@@ -46,4 +46,4 @@ function Alert(props) {
     )
 }
 
-export default Alert;
+export default MyAlert;

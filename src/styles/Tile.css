@@ -2,13 +2,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 75vh ;
-    width: 25rem ;
+    height: 75vh;
+    width: 25rem;
     padding: 20px;
 }
 
 .card {
-    height: 80px ;
+    height: 80px;
     perspective: 200px;
 }
 
@@ -41,7 +41,7 @@
 }
 
 .card-back {
-    background: rgb(56,161,105);
-    background: linear-gradient(45deg, rgba(56,161,105,1) 33%, rgba(238,238,238,1) 100%); 
+    background: rgb(56, 161, 105);
+    background: linear-gradient(45deg, rgba(56, 161, 105, 1) 33%, rgba(238, 238, 238, 1) 100%);
     transform: rotateY(180deg);
 }

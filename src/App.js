@@ -1,4 +1,4 @@
-import { Button, Center, ChakraProvider, HStack, VStack } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertTitle, Button, Center, ChakraProvider, HStack, VStack } from '@chakra-ui/react';
 import { generateLevels } from './logic/levels';
 import { generateBoard } from './logic/board';
 import Header from './components/Header';
@@ -6,10 +6,14 @@ import Bar from './components/Bar';
 import Board from './components/Board';
 import './App.css';
 import { useEffect, useState } from 'react';
+import CustomAlert from './components/CustomAlert';
+import { faSmileWink, faFrown } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
+
   // intiliaze the levels
   const levels = generateLevels();
+
   // intiliaze all the required states
   const [currentScore, setCurrentScore] = useState(0);
   const [highScore, setHighScore] = useState(localStorage.getItem('highScore') || 0);
@@ -35,6 +39,7 @@ function App() {
     )
   );
 
+  // states update
   const reset = () => {
     setCurrentScore(0);
     setCurrentLevel(0);
@@ -70,25 +75,42 @@ function App() {
   }
 
   const updateLevel = () => {
-    if (currentLevel + 1 == levels.length)
-      return false;
+    if (currentLevel + 1 == levels.length) {
+      setWon(true);
+      return;
+    }
     setCurrentLevel(currentLevel + 1);
-    return true;
   }
 
-  useEffect(() => {
-    let { n, m } = levels[currentLevel];
-    setTotalMoves(n * m + 1);
-    setCurrentMoves(n * m + 1);
-    setFlipState(Array.from({ length: n }, () =>
-      Array.from({ length: m }, () => true)
-    ));
-    setCorrectState(Array.from({ length: n }, () =>
-      Array.from({ length: m }, () => false)
-    ));
-    updateBoard(n, m);
-  }, [currentLevel]);
+  const checkWin = () => {
+    var cnt = 0;
+    for (var i = 0; i < n; i++) {
+      for (var j = 0; j < m; j++) {
+        if (!correctState[i][j]) {
+          cnt++;
+        }
+      }
+    }
+    return !cnt;
+  };
 
+  // listen for the levels update
+  useEffect(() => {
+    if (!lost) {
+      let { n, m } = levels[currentLevel];
+      setTotalMoves(n * m + 1);
+      setCurrentMoves(n * m + 1);
+      setFlipState(Array.from({ length: n }, () =>
+        Array.from({ length: m }, () => true)
+      ));
+      setCorrectState(Array.from({ length: n }, () =>
+        Array.from({ length: m }, () => false)
+      ));
+      updateBoard(n, m);
+    }
+  }, [currentLevel, lost]);
+
+  // update the high score
   useEffect(() => {
     if (currentScore >= highScore) {
       localStorage.setItem("highScore", currentScore);
@@ -96,7 +118,7 @@ function App() {
     }
   }, [currentScore]);
 
-
+  // listen for the user interaction with the tiles
   useEffect(() => {
     let stack = [];
     for (var i = 0; i < n; i++) {
@@ -127,32 +149,37 @@ function App() {
 
   }, [flipState]);
 
+  // checking if the level is finished 
   useEffect(() => {
-    var cnt = 0;
-    for (var i = 0; i < n; i++) {
-      for (var j = 0; j < m; j++) {
-        if (!correctState[i][j]) {
-          cnt++;
-        }
-      }
-    }
-    if (!cnt) {
+    if (checkWin()) {
       setTimeout(updateLevel, 250);
     }
   }, [correctState]);
 
-  const toggle = () => {
-    setWon(!won);
-  }
+  // checking for the winning 
+  useEffect(() => {
+    if (won) {
+      setTimeout(() => { setWon(false); reset(); }, 1000);
+    }
+  }, [won]);
+
+  // checking for the losing
+  useEffect(() => {
+    if (currentMoves == 0 && !checkWin()) {
+      setLost(true);
+      setTimeout(() => { setLost(false); reset(); }, 1000);
+    }
+  }, [currentMoves]);
 
   return (
     <ChakraProvider>
       <Center height={"100vh"}>
         <VStack>
+          {won ? <CustomAlert status={"success"} icon={faSmileWink} message={`You won the game your score is ${currentScore}`} /> : ''}
+          {lost ? <CustomAlert status={"error"} icon={faFrown} message={`You lost the game your score is ${currentScore}`} /> : ''}
           <Header score={currentScore} highScore={highScore} action={reset} />
           <Board tiles={board} flip={flipState} setFlip={updateFlipState} correct={correctState} level={currentLevel + 1} ></Board>
           <Bar moves={currentMoves} totMoves={totalMoves} />
-          <Button onClick={toggle}> toggle </Button>
         </VStack>
       </Center>
     </ChakraProvider>
