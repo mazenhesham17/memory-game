@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertTitle, Button, Center, ChakraProvider, HStack, VStack } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertTitle, Button, Center, ChakraProvider, HStack, Image, VStack } from '@chakra-ui/react';
 import { generateLevels } from './logic/levels';
 import { generateBoard } from './logic/board';
 import Header from './components/Header';
@@ -173,15 +173,17 @@ function App() {
 
   return (
     <ChakraProvider>
-      <Center height={"100vh"}>
-        <VStack>
-          {won ? <CustomAlert status={"success"} icon={faSmileWink} message={`You won the game your score is ${currentScore}`} /> : ''}
-          {lost ? <CustomAlert status={"error"} icon={faFrown} message={`You lost the game your score is ${currentScore}`} /> : ''}
-          <Header score={currentScore} highScore={highScore} action={reset} />
-          <Board tiles={board} flip={flipState} setFlip={updateFlipState} correct={correctState} level={currentLevel + 1} ></Board>
-          <Bar moves={currentMoves} totMoves={totalMoves} />
-        </VStack>
-      </Center>
+      <main>
+        <Center height={"90vh"}>
+          <VStack>
+            {won ? <CustomAlert status={"success"} icon={faSmileWink} message={`You won the game your score is ${currentScore}`} /> : ''}
+            {lost ? <CustomAlert status={"error"} icon={faFrown} message={`You lost the game your score is ${currentScore}`} /> : ''}
+            <Header score={currentScore} highScore={highScore} action={reset} />
+            <Board tiles={board} flip={flipState} setFlip={updateFlipState} correct={correctState} level={currentLevel + 1} ></Board>
+            <Bar moves={currentMoves} totMoves={totalMoves} />
+          </VStack>
+        </Center>
+      </main>
     </ChakraProvider>
   );
 }
