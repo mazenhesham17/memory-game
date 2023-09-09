@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertTitle, Button, Center, ChakraProvider, HStack, Image, VStack } from '@chakra-ui/react';
+import { Center, ChakraProvider, VStack } from '@chakra-ui/react';
 import { generateLevels } from './logic/levels';
 import { generateBoard } from './logic/board';
 import Header from './components/Header';
